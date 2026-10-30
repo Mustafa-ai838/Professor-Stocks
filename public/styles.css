@@ -1,0 +1,415 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #101829;
+  background: #fff;
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.auth-layout {
+  display: grid;
+  grid-template-columns: minmax(340px, 30.6%) 1fr;
+  min-height: 100vh;
+}
+
+.brand-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 48px clamp(32px, 5vw, 72px) 36px;
+  color: #f8fafc;
+  background: #101829;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  color: inherit;
+  font-size: 19px;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  text-decoration: none;
+}
+
+.brand svg {
+  width: 26px;
+  height: 26px;
+}
+
+.brand-copy {
+  width: 100%;
+  max-width: 450px;
+  margin: 48px auto;
+}
+
+.eyebrow {
+  margin: 0 0 15px;
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.13em;
+}
+
+.brand-copy h1 {
+  margin: 0;
+  font-size: clamp(32px, 3.1vw, 44px);
+  font-weight: 760;
+  letter-spacing: -0.045em;
+  line-height: 1.18;
+}
+
+.brand-description {
+  max-width: 400px;
+  margin: 20px 0 26px;
+  color: #c4cedc;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.market-card {
+  padding: 20px 22px 13px;
+  border: 1px solid rgb(255 255 255 / 4%);
+  border-radius: 15px;
+  background: #1d293b;
+}
+
+.market-card-heading {
+  display: flex;
+  justify-content: space-between;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.market-card-heading strong {
+  color: #4ade80;
+  font-size: 14px;
+}
+
+.market-chart {
+  display: block;
+  width: 100%;
+  height: 70px;
+  margin-top: 10px;
+  overflow: visible;
+}
+
+.market-chart polyline {
+  fill: none;
+  stroke: #43e67f;
+  stroke-width: 2.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-note {
+  display: block;
+  margin-top: 3px;
+  color: #8e9bb0;
+  font-size: 10px;
+}
+
+.copyright {
+  margin: 0;
+  color: #718099;
+  font-size: 13px;
+}
+
+.form-panel {
+  display: grid;
+  place-items: center;
+  padding: 48px 32px;
+}
+
+.auth-card {
+  width: min(100%, 450px);
+}
+
+.form-heading {
+  margin-bottom: 30px;
+}
+
+.form-heading h2 {
+  margin: 0 0 7px;
+  font-size: 32px;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.form-heading p,
+.switch-mode {
+  margin: 0;
+  color: #657795;
+  font-size: 16px;
+}
+
+.field {
+  margin-bottom: 19px;
+}
+
+.field[hidden],
+[hidden] {
+  display: none !important;
+}
+
+.field label,
+.label-row {
+  color: #101829;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.field > label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.field input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  border: 1px solid #dce3ee;
+  border-radius: 9px;
+  outline: none;
+  background: #fff;
+  color: #101829;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.field input::placeholder {
+  color: #94a3b8;
+}
+
+.field input:focus {
+  border-color: #2453df;
+  box-shadow: 0 0 0 3px rgb(36 83 223 / 12%);
+}
+
+.text-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #1750e9;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+}
+
+.field-hint {
+  margin: 7px 0 0;
+  color: #657795;
+  font-size: 12px;
+}
+
+.primary-button,
+.secondary-button,
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 51px;
+  border-radius: 9px;
+  font-weight: 700;
+}
+
+.primary-button {
+  margin-top: 6px;
+  border: 1px solid #204de0;
+  background: #2453df;
+  color: #fff;
+  font-size: 16px;
+  transition: background 140ms ease;
+}
+
+.primary-button:hover {
+  background: #1944ca;
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 27px 0;
+  color: #657795;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.divider::before,
+.divider::after {
+  height: 1px;
+  flex: 1;
+  background: #dce3ee;
+  content: "";
+}
+
+.google-button {
+  gap: 11px;
+  border: 1px solid #dce3ee;
+  background: #fff;
+  color: #101829;
+  font-size: 15px;
+}
+
+.google-button:hover,
+.secondary-button:hover {
+  background: #f7f9fc;
+}
+
+.google-mark {
+  color: #4285f4;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.switch-mode {
+  margin-top: 29px;
+  text-align: center;
+}
+
+.switch-mode .text-button {
+  font-size: 16px;
+}
+
+.status-message {
+  min-height: 0;
+  margin: 0;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.status-message:not(:empty) {
+  margin: 0 0 12px;
+}
+
+.status-message.success {
+  color: #15803d;
+}
+
+.signed-in {
+  margin-top: 26px;
+  padding: 18px;
+  border: 1px solid #dce3ee;
+  border-radius: 10px;
+  color: #53647d;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.signed-in p {
+  margin: 0 0 10px;
+}
+
+.signed-in strong {
+  color: #101829;
+  overflow-wrap: anywhere;
+}
+
+.secondary-button {
+  min-height: 42px;
+  margin-top: 15px;
+  border: 1px solid #dce3ee;
+  background: #fff;
+  color: #101829;
+}
+
+.security-note {
+  margin: 24px 0 0;
+  color: #8a97aa;
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    min-height: auto;
+    padding: 24px 24px 28px;
+  }
+
+  .brand-copy {
+    margin: 37px auto 8px;
+  }
+
+  .brand-copy h1 {
+    max-width: 490px;
+    font-size: clamp(30px, 8vw, 40px);
+  }
+
+  .brand-description {
+    margin: 12px 0 18px;
+    font-size: 15px;
+  }
+
+  .market-card {
+    max-width: 460px;
+  }
+
+  .copyright {
+    display: none;
+  }
+
+  .form-panel {
+    padding: 42px 24px 50px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-panel {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .form-panel {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .form-heading h2 {
+    font-size: 29px;
+  }
+}
