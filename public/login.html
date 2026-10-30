@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101829">
+    <title>Sign in | Professor Stock Analysis</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/vendor/supabase.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="auth-layout">
+      <aside class="brand-panel">
+        <a class="brand" href="/" aria-label="Professor Stock Analysis home">
+          <svg aria-hidden="true" viewBox="0 0 28 28" fill="none">
+            <path d="M3 20.5 10 13l4.8 4.7L25 7.5M17.5 7.5H25V15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Professor Stock Analysis</span>
+        </a>
+
+        <section class="brand-copy">
+          <p class="eyebrow">BUILT FOR PSX INVESTORS</p>
+          <h1>Track Pakistan's market in real time</h1>
+          <p class="brand-description">Live KSE-100 data, custom screeners and watchlists — built for PSX investors.</p>
+          <div class="market-card" aria-label="Illustrative KSE-100 chart">
+            <div class="market-card-heading">
+              <span>KSE-100</span>
+              <strong>+3.84%</strong>
+            </div>
+            <svg class="market-chart" viewBox="0 0 360 70" role="img" aria-label="Illustrative upward market trend">
+              <polyline points="2,53 39,46 76,51 113,31 150,38 187,20 224,26 261,15 298,22 358,7"/>
+            </svg>
+            <span class="chart-note">Illustrative market data</span>
+          </div>
+        </section>
+
+        <p class="copyright">© <span id="year"></span> Professor Stock Analysis</p>
+      </aside>
+
+      <section class="form-panel">
+        <div class="auth-card">
+          <header class="form-heading">
+            <h2 id="form-title">Welcome back</h2>
+            <p id="form-subtitle">Sign in to view your watchlist and alerts.</p>
+          </header>
+
+          <form id="auth-form" novalidate>
+            <div class="field" id="name-field" hidden>
+              <label for="name">Name</label>
+              <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" minlength="2" maxlength="80">
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+            </div>
+
+            <div class="field">
+              <div class="label-row">
+                <label for="password">Password</label>
+                <button class="text-button" id="forgot-password" type="button">Forgot password?</button>
+              </div>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" maxlength="128" required>
+              <p class="field-hint" id="password-hint" hidden>Use at least 8 characters.</p>
+            </div>
+
+            <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
+            <button class="primary-button" id="submit-button" type="submit">Sign in</button>
+          </form>
+
+          <div class="divider"><span>or continue with</span></div>
+          <button class="google-button" id="google-button" type="button">
+            <span class="google-mark" aria-hidden="true">G</span>
+            Continue with Google
+          </button>
+
+          <p class="switch-mode" id="switch-mode">
+            Don't have an account?
+            <button class="text-button" id="mode-button" type="button">Sign up</button>
+          </p>
+          <section class="signed-in" id="signed-in" hidden>
+            <p>Signed in as <strong id="user-email"></strong></p>
+            <p>Your account is ready. Visit the homepage to explore the live market dashboard.</p>
+            <button class="secondary-button" id="logout-button" type="button">Sign out</button>
+          </section>
+          <p class="security-note">Your password is securely hashed and never stored as plain text.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

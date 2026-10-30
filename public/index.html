@@ -4,88 +4,164 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#101829">
-    <title>Sign in | Professor Stocks</title>
-    <link rel="stylesheet" href="/styles.css">
-    <script src="/app.js" defer></script>
+    <meta name="description" content="Live Pakistan Stock Exchange market snapshot and official company disclosures.">
+    <title>Professor Stock Analysis | Pakistan Stock Exchange</title>
+    <link rel="stylesheet" href="/home.css?v=live-quotes-fallback">
+    <script src="/vendor/supabase.js" defer></script>
+    <script src="/psx-data.js?v=live-quotes-fallback" defer></script>
+    <script src="/home.js?v=live-quotes-fallback" defer></script>
   </head>
   <body>
-    <main class="auth-layout">
-      <aside class="brand-panel">
-        <a class="brand" href="/" aria-label="Professor Stocks home">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="Professor Stock Analysis home">
           <svg aria-hidden="true" viewBox="0 0 28 28" fill="none">
             <path d="M3 20.5 10 13l4.8 4.7L25 7.5M17.5 7.5H25V15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Professor Stocks</span>
+          <span>Professor Stock Analysis</span>
         </a>
 
-        <section class="brand-copy">
-          <p class="eyebrow">BUILT FOR PSX INVESTORS</p>
-          <h1>Track Pakistan's market in real time</h1>
-          <p class="brand-description">Live KSE-100 data, custom screeners and watchlists — built for PSX investors.</p>
-          <div class="market-card" aria-label="Illustrative KSE-100 chart">
-            <div class="market-card-heading">
-              <span>KSE-100</span>
-              <strong>+1.84%</strong>
-            </div>
-            <svg class="market-chart" viewBox="0 0 360 70" role="img" aria-label="Illustrative upward market trend">
-              <polyline points="2,53 39,46 76,51 113,31 150,38 187,20 224,26 261,15 298,22 358,7"/>
-            </svg>
-            <span class="chart-note">Illustrative market data</span>
+        <button class="market-selector" type="button" aria-label="Selected market: Pakistan PSX">
+          Pakistan <span aria-hidden="true">·</span> PSX <span class="selector-chevron" aria-hidden="true">⌄</span>
+        </button>
+
+        <label class="search-box">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/>
+            <path d="m16 16 4.2 4.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+          <input type="search" placeholder="Search stocks, symbols or companies" aria-label="Search stocks, symbols or companies">
+        </label>
+
+        <nav class="main-nav" aria-label="Main navigation">
+          <a href="#">Markets</a>
+          <a href="#screener">Screener</a>
+          <a href="#">Watchlist</a>
+          <a href="#news">News</a>
+        </nav>
+
+        <div class="auth-actions" id="auth-actions">
+          <a class="login-link" href="/login">Log In</a>
+          <a class="signup-link" href="/login?mode=signup">Sign Up</a>
+        </div>
+        <div class="user-menu" id="user-menu" hidden>
+          <span class="user-email" id="user-email"></span>
+          <button class="login-link" id="logout-button" type="button">Log Out</button>
+        </div>
+
+        <button class="mobile-menu-button" id="mobile-menu-button" type="button" aria-label="Toggle navigation" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <section class="market-snapshot" aria-labelledby="snapshot-heading">
+        <div class="section-topline">
+          <div>
+            <p class="eyebrow">MARKET SNAPSHOT</p>
+            <h1 id="snapshot-heading">KSE-100 Index</h1>
           </div>
-        </section>
+          <span class="market-status is-loading" id="market-status"><span class="status-dot"></span>Checking market</span>
+        </div>
 
-        <p class="copyright">© <span id="year"></span> Professor Stocks</p>
-      </aside>
+        <div class="snapshot-card" id="snapshot-card">
+          <div class="snapshot-value">
+            <p class="index-value" id="index-value">--</p>
+            <p class="index-change is-muted" id="index-change">Loading live index data…</p>
+            <p class="snapshot-error" id="snapshot-error" hidden>Couldn't load live data — try refreshing.</p>
+          </div>
+          <svg class="index-chart" id="index-chart" viewBox="0 0 180 72" role="img" aria-label="KSE-100 intraday movement">
+            <polyline id="index-chart-line" points=""></polyline>
+          </svg>
+          <p class="snapshot-chart-error" id="chart-error" hidden>Couldn't load live data — try refreshing.</p>
+        </div>
+      </section>
 
-      <section class="form-panel">
-        <div class="auth-card">
-          <header class="form-heading">
-            <h2 id="form-title">Welcome back</h2>
-            <p id="form-subtitle">Sign in to view your watchlist and alerts.</p>
-          </header>
+      <section class="leaders-grid" aria-label="Market leaders">
+        <article class="leader-card">
+          <h2><span class="leader-icon gain-icon" aria-hidden="true">↑</span>Top Gainers</h2>
+          <div class="leader-list" id="top-gainers" aria-live="polite">
+            <p class="loading-message">Loading live data…</p>
+          </div>
+        </article>
+        <article class="leader-card">
+          <h2><span class="leader-icon loss-icon" aria-hidden="true">↓</span>Top Losers</h2>
+          <div class="leader-list" id="top-losers" aria-live="polite">
+            <p class="loading-message">Loading live data…</p>
+          </div>
+        </article>
+        <article class="leader-card">
+          <h2><span class="leader-icon volume-icon" aria-hidden="true">▥</span>Most Active</h2>
+          <div class="leader-list" id="most-active" aria-live="polite">
+            <p class="loading-message">Loading live data…</p>
+          </div>
+        </article>
+      </section>
 
-          <form id="auth-form" novalidate>
-            <div class="field" id="name-field" hidden>
-              <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" placeholder="Your name" minlength="2" maxlength="80">
-            </div>
+      <section class="screener-banner" id="screener">
+        <div>
+          <h2>Find your next investment</h2>
+          <p>Filter stocks by sector, valuation and performance, then save the ones<br class="desktop-break"> you're watching.</p>
+        </div>
+        <a class="screener-button" href="#screener">Try the Screener</a>
+      </section>
 
-            <div class="field">
-              <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
-            </div>
-
-            <div class="field">
-              <div class="label-row">
-                <label for="password">Password</label>
-                <button class="text-button" id="forgot-password" type="button">Forgot password?</button>
-              </div>
-              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" maxlength="128" required>
-              <p class="field-hint" id="password-hint" hidden>Use at least 8 characters.</p>
-            </div>
-
-            <p class="status-message" id="status-message" role="status" aria-live="polite"></p>
-            <button class="primary-button" id="submit-button" type="submit">Sign in</button>
-          </form>
-
-          <div class="divider"><span>or continue with</span></div>
-          <button class="google-button" id="google-button" type="button">
-            <span class="google-mark" aria-hidden="true">G</span>
-            Continue with Google
+      <section class="news-section" id="news" aria-labelledby="news-heading">
+        <div class="news-heading-row">
+          <div>
+            <h2 id="news-heading">Market News</h2>
+            <p class="news-description">Latest official PSX company announcements and disclosures</p>
+          </div>
+          <button class="refresh-button" id="refresh-button" type="button" aria-label="Refresh market data">
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="M20 7v5h-5M4 17v-5h5m-3.1-3a7 7 0 0 1 11.6-2.1L20 12M4 12l2.5 5.1A7 7 0 0 0 18 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Refresh
           </button>
-
-          <p class="switch-mode" id="switch-mode">
-            Don't have an account?
-            <button class="text-button" id="mode-button" type="button">Sign up</button>
-          </p>
-          <section class="signed-in" id="signed-in" hidden>
-            <p>Signed in as <strong id="user-email"></strong></p>
-            <p>Your account is ready. Your watchlist dashboard can be connected here next.</p>
-            <button class="secondary-button" id="logout-button" type="button">Sign out</button>
-          </section>
-          <p class="security-note">Your password is securely hashed and never stored as plain text.</p>
+        </div>
+        <div class="news-grid" id="news-grid" aria-live="polite">
+          <p class="loading-message">Loading official PSX disclosures…</p>
         </div>
       </section>
     </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-main">
+          <div class="footer-brand">
+            <a class="brand" href="/" aria-label="Professor Stock Analysis home">
+              <svg aria-hidden="true" viewBox="0 0 28 28" fill="none">
+                <path d="M3 20.5 10 13l4.8 4.7L25 7.5M17.5 7.5H25V15" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Professor Stock Analysis</span>
+            </a>
+            <p>Insights and screening tools for the<br> Pakistan Stock Exchange.</p>
+          </div>
+          <div class="footer-column">
+            <h3>MARKETS</h3>
+            <a href="#">KSE-100</a>
+            <a href="#">Sectors</a>
+            <a href="#">IPOs</a>
+          </div>
+          <div class="footer-column">
+            <h3>RESOURCES</h3>
+            <a href="#screener">Screener</a>
+            <a href="#">Watchlist</a>
+            <a href="#">Help Center</a>
+          </div>
+          <div class="footer-column">
+            <h3>LEGAL</h3>
+            <a href="#">Terms</a>
+            <a href="#">Privacy</a>
+            <a href="#">Disclaimer</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© <span id="year"></span> Professor Stock Analysis. Market data from PSX DPS and TradingView.</p>
+          <p>Not investment advice.</p>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
